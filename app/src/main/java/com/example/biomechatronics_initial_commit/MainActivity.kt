@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
             Biomechatronics_initial_commitTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting(
-                        name = "Android",
+                        name = "GitHub",
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
