@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.biomechatronics_initial_commit.ui.theme.Biomechatronics_initial_commitTheme
+import androidx.compose.material3.Button
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,16 +33,18 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
+    Button(onClick = { }) {
+        Text(
+            text = "Button name: $name",
+            modifier = modifier
+        )
+    }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     Biomechatronics_initial_commitTheme {
-        Greeting("Android")
+        Greeting("GitHub")
     }
 }
