@@ -13,6 +13,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.biomechatronics_initial_commit.ui.theme.Biomechatronics_initial_commitTheme
 import androidx.compose.material3.Button
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,11 +25,11 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Biomechatronics_initial_commitTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "GitHub",
-                        modifier = Modifier.padding(innerPadding)
+                Column(modifier = Modifier.statusBarsPadding()) {
+                    Text(
+                        text = "Page 2"
                     )
+                    ButtonGrid()
                 }
             }
         }
@@ -40,6 +45,46 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
         )
     }
 }
+
+@Composable
+fun ButtonGrid(modifier: Modifier = Modifier) {
+    Column(modifier) {
+        Row {
+            Button(onClick = { }) {
+                Text("1")
+            }
+            Button(onClick = { }) {
+                Text("2")
+            }
+            Button(onClick = { }) {
+                Text("3")
+            }
+        }
+        Row {
+            Button(onClick = { }) {
+                Text("4")
+            }
+            Button(onClick = { }) {
+                Text("5")
+            }
+            Button(onClick = { }) {
+                Text("6")
+            }
+        }
+        Row {
+            Button(onClick = { }) {
+                Text("7")
+            }
+            Button(onClick = { }) {
+                Text("8")
+            }
+            Button(onClick = { }) {
+                Text("9")
+            }
+        }
+    }
+}
+
 
 @Preview(showBackground = true)
 @Composable
