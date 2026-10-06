@@ -18,6 +18,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.ui.graphics.Color
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,10 +67,22 @@ fun ButtonGrid(modifier: Modifier = Modifier) {
                 modifier = Modifier.size(width = 240.dp, height = 100.dp),
                 shape = RectangleShape
             ) {
-                Text(
-                    "Left Lower Arm",
-                    fontSize = 18.sp
-                )
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        "Left Lower Arm",
+                        fontSize = 18.sp
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Box(
+                        modifier = Modifier
+                            .size(20.dp)
+                            .background(Color.Red, CircleShape)
+                    )
+                }
             }
 
             Button(
@@ -72,10 +90,20 @@ fun ButtonGrid(modifier: Modifier = Modifier) {
                 modifier = Modifier.size(width = 240.dp, height = 100.dp),
                 shape = RectangleShape
             ) {
-                Text(
-                    "Right Lower Arm",
-                    fontSize = 18.sp
-                )
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(
+                        "Right Lower Arm",
+                        fontSize = 18.sp
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Box(
+                        modifier = Modifier
+                            .size(20.dp)
+                            .background(Color.Red, CircleShape)
+                    )
+                }
             }
 
             Button(
@@ -83,47 +111,20 @@ fun ButtonGrid(modifier: Modifier = Modifier) {
                 modifier = Modifier.size(width = 240.dp, height = 100.dp),
                 shape = RectangleShape
             ) {
-                Text(
-                    "Left Upper Arm",
-                    fontSize = 18.sp
-                )
-            }
-        }
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(
+                        "Left Upper Arm",
+                        fontSize = 18.sp
+                    )
 
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            Button(
-                onClick = { },
-                modifier = Modifier.size(width = 240.dp, height = 100.dp),
-                shape = RectangleShape
-            ) {
-                Text(
-                    "Right Upper Arm",
-                    fontSize = 18.sp
-                )
-            }
+                    Spacer(modifier = Modifier.height(8.dp))
 
-            Button(
-                onClick = { },
-                modifier = Modifier.size(width = 240.dp, height = 100.dp),
-                shape = RectangleShape
-            ) {
-                Text(
-                    "Left Lower Leg",
-                    fontSize = 18.sp
-                )
-            }
-
-            Button(
-                onClick = { },
-                modifier = Modifier.size(width = 240.dp, height = 100.dp),
-                shape = RectangleShape
-            ) {
-                Text(
-                    "Right Lower Leg",
-                    fontSize = 18.sp
-                )
+                    Box(
+                        modifier = Modifier
+                            .size(20.dp)
+                            .background(Color.Red, CircleShape)
+                    )
+                }
             }
         }
 
@@ -135,10 +136,20 @@ fun ButtonGrid(modifier: Modifier = Modifier) {
                 modifier = Modifier.size(width = 240.dp, height = 100.dp),
                 shape = RectangleShape
             ) {
-                Text(
-                    "Left Upper Leg",
-                    fontSize = 18.sp
-                )
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(
+                        "Right Upper Arm",
+                        fontSize = 18.sp
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Box(
+                        modifier = Modifier
+                            .size(20.dp)
+                            .background(Color.Red, CircleShape)
+                    )
+                }
             }
 
             Button(
@@ -146,10 +157,20 @@ fun ButtonGrid(modifier: Modifier = Modifier) {
                 modifier = Modifier.size(width = 240.dp, height = 100.dp),
                 shape = RectangleShape
             ) {
-                Text(
-                    "Right Upper Leg",
-                    fontSize = 18.sp
-                )
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(
+                        "Left Lower Leg",
+                        fontSize = 18.sp
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Box(
+                        modifier = Modifier
+                            .size(20.dp)
+                            .background(Color.Red, CircleShape)
+                    )
+                }
             }
 
             Button(
@@ -157,10 +178,87 @@ fun ButtonGrid(modifier: Modifier = Modifier) {
                 modifier = Modifier.size(width = 240.dp, height = 100.dp),
                 shape = RectangleShape
             ) {
-                Text(
-                    "Chest",
-                    fontSize = 18.sp
-                )
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(
+                        "Right Lower Leg",
+                        fontSize = 18.sp
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Box(
+                        modifier = Modifier
+                            .size(20.dp)
+                            .background(Color.Red, CircleShape)
+                    )
+                }
+            }
+        }
+
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            Button(
+                onClick = { },
+                modifier = Modifier.size(width = 240.dp, height = 100.dp),
+                shape = RectangleShape
+            ) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(
+                        "Left Upper Leg",
+                        fontSize = 18.sp
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Box(
+                        modifier = Modifier
+                            .size(20.dp)
+                            .background(Color.Red, CircleShape)
+                    )
+                }
+            }
+
+            Button(
+                onClick = { },
+                modifier = Modifier.size(width = 240.dp, height = 100.dp),
+                shape = RectangleShape
+            ) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(
+                        "Right Upper Leg",
+                        fontSize = 18.sp
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Box(
+                        modifier = Modifier
+                            .size(20.dp)
+                            .background(Color.Red, CircleShape)
+                    )
+                }
+            }
+
+            Button(
+                onClick = { },
+                modifier = Modifier.size(width = 240.dp, height = 100.dp),
+                shape = RectangleShape
+            ) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(
+                        "Chest",
+                        fontSize = 18.sp
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Box(
+                        modifier = Modifier
+                            .size(20.dp)
+                            .background(Color.Red, CircleShape)
+                    )
+                }
             }
         }
     }
