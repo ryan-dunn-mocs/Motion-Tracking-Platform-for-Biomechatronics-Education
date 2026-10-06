@@ -78,14 +78,25 @@ fun BodyPartButton(
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            Box(
-                modifier = Modifier
-                    .size(20.dp)
-                    .background(
-                        color = if (isOn) Color.Green else Color.Red,
-                        shape = CircleShape
-                    )
-            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Box(
+                    modifier = Modifier
+                        .size(20.dp)
+                        .background(
+                            color = if (isOn) Color.Green else Color.Red,
+                            shape = CircleShape
+                        )
+                )
+
+                Spacer(modifier = Modifier.width(8.dp))
+
+                Text(
+                    text = if (isOn) "Connected" else "Disconnected",
+                    fontSize = 14.sp
+                )
+            }
         }
     }
 }
