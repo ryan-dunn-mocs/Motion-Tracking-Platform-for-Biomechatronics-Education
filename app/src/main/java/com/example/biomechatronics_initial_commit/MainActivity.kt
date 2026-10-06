@@ -4,9 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -16,8 +13,10 @@ import androidx.compose.material3.Button
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.foundation.layout.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,42 +47,82 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 
 @Composable
 fun ButtonGrid(modifier: Modifier = Modifier) {
-    Column(modifier) {
+    Column(
+        modifier = modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
         Row {
-            Button(onClick = { }) {
-                Text("1")
+            Button(
+                onClick = { },
+                modifier = Modifier.size(100.dp)
+            ) {
+                Text("1", fontSize = 24.sp)
             }
-            Button(onClick = { }) {
-                Text("2")
+
+            Button(
+                onClick = { },
+                modifier = Modifier.size(100.dp)
+            ) {
+                Text("2", fontSize = 24.sp)
             }
-            Button(onClick = { }) {
-                Text("3")
+
+            Button(
+                onClick = { },
+                modifier = Modifier.size(100.dp)
+            ) {
+                Text("3", fontSize = 24.sp)
             }
         }
+
         Row {
-            Button(onClick = { }) {
-                Text("4")
+            Button(
+                onClick = { },
+                modifier = Modifier.size(100.dp)
+            ) {
+                Text("4", fontSize = 24.sp)
             }
-            Button(onClick = { }) {
-                Text("5")
+
+            Button(
+                onClick = { },
+                modifier = Modifier.size(100.dp)
+            ) {
+                Text("5", fontSize = 24.sp)
             }
-            Button(onClick = { }) {
-                Text("6")
+
+            Button(
+                onClick = { },
+                modifier = Modifier.size(100.dp)
+            ) {
+                Text("6", fontSize = 24.sp)
             }
         }
+
         Row {
-            Button(onClick = { }) {
-                Text("7")
+            Button(
+                onClick = { },
+                modifier = Modifier.size(100.dp)
+            ) {
+                Text("7", fontSize = 24.sp)
             }
-            Button(onClick = { }) {
-                Text("8")
+
+            Button(
+                onClick = { },
+                modifier = Modifier.size(100.dp)
+            ) {
+                Text("8", fontSize = 24.sp)
             }
-            Button(onClick = { }) {
-                Text("9")
+
+            Button(
+                onClick = { },
+                modifier = Modifier.size(100.dp)
+            ) {
+                Text("9", fontSize = 24.sp)
             }
         }
     }
 }
+
 
 
 @Preview(showBackground = true)
