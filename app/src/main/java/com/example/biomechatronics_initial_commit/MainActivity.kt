@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.graphics.RectangleShape
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,78 +51,90 @@ fun ButtonGrid(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically)
     ) {
-        Row {
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
             Button(
                 onClick = { },
-                modifier = Modifier.size(100.dp)
+                modifier = Modifier.size(80.dp),
+                shape = RectangleShape
             ) {
                 Text("1", fontSize = 24.sp)
             }
 
             Button(
                 onClick = { },
-                modifier = Modifier.size(100.dp)
+                modifier = Modifier.size(80.dp),
+                shape = RectangleShape
             ) {
                 Text("2", fontSize = 24.sp)
             }
 
             Button(
                 onClick = { },
-                modifier = Modifier.size(100.dp)
+                modifier = Modifier.size(80.dp),
+                shape = RectangleShape
             ) {
                 Text("3", fontSize = 24.sp)
             }
         }
 
-        Row {
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
             Button(
                 onClick = { },
-                modifier = Modifier.size(100.dp)
+                modifier = Modifier.size(80.dp),
+                shape = RectangleShape
             ) {
                 Text("4", fontSize = 24.sp)
             }
-
             Button(
                 onClick = { },
-                modifier = Modifier.size(100.dp)
+                modifier = Modifier.size(80.dp),
+                shape = RectangleShape
             ) {
                 Text("5", fontSize = 24.sp)
             }
-
             Button(
                 onClick = { },
-                modifier = Modifier.size(100.dp)
+                modifier = Modifier.size(80.dp),
+                shape = RectangleShape
             ) {
                 Text("6", fontSize = 24.sp)
             }
         }
 
-        Row {
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
             Button(
                 onClick = { },
-                modifier = Modifier.size(100.dp)
+                modifier = Modifier.size(80.dp),
+                shape = RectangleShape
             ) {
                 Text("7", fontSize = 24.sp)
             }
-
             Button(
                 onClick = { },
-                modifier = Modifier.size(100.dp)
+                modifier = Modifier.size(80.dp),
+                shape = RectangleShape
             ) {
                 Text("8", fontSize = 24.sp)
             }
-
             Button(
                 onClick = { },
-                modifier = Modifier.size(100.dp)
+                modifier = Modifier.size(80.dp),
+                shape = RectangleShape
             ) {
                 Text("9", fontSize = 24.sp)
             }
         }
     }
 }
+
 
 
 
