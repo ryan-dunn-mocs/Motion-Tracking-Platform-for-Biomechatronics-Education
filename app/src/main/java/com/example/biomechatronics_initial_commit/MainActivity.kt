@@ -24,6 +24,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.ui.graphics.Color
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,219 +57,74 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun ButtonGrid(modifier: Modifier = Modifier) {
-    Column(
-        modifier = modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically)
+fun BodyPartButton(
+    label: String,
+    modifier: Modifier = Modifier
+) {
+    var isOn by remember { mutableStateOf(false) }
+
+    Button(
+        onClick = { isOn = !isOn },
+        modifier = modifier.size(width = 240.dp, height = 100.dp),
+        shape = RectangleShape
     ) {
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Button(
-                onClick = { },
-                modifier = Modifier.size(width = 240.dp, height = 100.dp),
-                shape = RectangleShape
-            ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        "Left Lower Arm",
-                        fontSize = 18.sp
+            Text(
+                text = label,
+                fontSize = 18.sp
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Box(
+                modifier = Modifier
+                    .size(20.dp)
+                    .background(
+                        color = if (isOn) Color.Green else Color.Red,
+                        shape = CircleShape
                     )
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    Box(
-                        modifier = Modifier
-                            .size(20.dp)
-                            .background(Color.Red, CircleShape)
-                    )
-                }
-            }
-
-            Button(
-                onClick = { },
-                modifier = Modifier.size(width = 240.dp, height = 100.dp),
-                shape = RectangleShape
-            ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(
-                        "Right Lower Arm",
-                        fontSize = 18.sp
-                    )
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    Box(
-                        modifier = Modifier
-                            .size(20.dp)
-                            .background(Color.Red, CircleShape)
-                    )
-                }
-            }
-
-            Button(
-                onClick = { },
-                modifier = Modifier.size(width = 240.dp, height = 100.dp),
-                shape = RectangleShape
-            ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(
-                        "Left Upper Arm",
-                        fontSize = 18.sp
-                    )
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    Box(
-                        modifier = Modifier
-                            .size(20.dp)
-                            .background(Color.Red, CircleShape)
-                    )
-                }
-            }
-        }
-
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            Button(
-                onClick = { },
-                modifier = Modifier.size(width = 240.dp, height = 100.dp),
-                shape = RectangleShape
-            ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(
-                        "Right Upper Arm",
-                        fontSize = 18.sp
-                    )
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    Box(
-                        modifier = Modifier
-                            .size(20.dp)
-                            .background(Color.Red, CircleShape)
-                    )
-                }
-            }
-
-            Button(
-                onClick = { },
-                modifier = Modifier.size(width = 240.dp, height = 100.dp),
-                shape = RectangleShape
-            ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(
-                        "Left Lower Leg",
-                        fontSize = 18.sp
-                    )
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    Box(
-                        modifier = Modifier
-                            .size(20.dp)
-                            .background(Color.Red, CircleShape)
-                    )
-                }
-            }
-
-            Button(
-                onClick = { },
-                modifier = Modifier.size(width = 240.dp, height = 100.dp),
-                shape = RectangleShape
-            ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(
-                        "Right Lower Leg",
-                        fontSize = 18.sp
-                    )
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    Box(
-                        modifier = Modifier
-                            .size(20.dp)
-                            .background(Color.Red, CircleShape)
-                    )
-                }
-            }
-        }
-
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            Button(
-                onClick = { },
-                modifier = Modifier.size(width = 240.dp, height = 100.dp),
-                shape = RectangleShape
-            ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(
-                        "Left Upper Leg",
-                        fontSize = 18.sp
-                    )
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    Box(
-                        modifier = Modifier
-                            .size(20.dp)
-                            .background(Color.Red, CircleShape)
-                    )
-                }
-            }
-
-            Button(
-                onClick = { },
-                modifier = Modifier.size(width = 240.dp, height = 100.dp),
-                shape = RectangleShape
-            ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(
-                        "Right Upper Leg",
-                        fontSize = 18.sp
-                    )
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    Box(
-                        modifier = Modifier
-                            .size(20.dp)
-                            .background(Color.Red, CircleShape)
-                    )
-                }
-            }
-
-            Button(
-                onClick = { },
-                modifier = Modifier.size(width = 240.dp, height = 100.dp),
-                shape = RectangleShape
-            ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(
-                        "Chest",
-                        fontSize = 18.sp
-                    )
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    Box(
-                        modifier = Modifier
-                            .size(20.dp)
-                            .background(Color.Red, CircleShape)
-                    )
-                }
-            }
+            )
         }
     }
 }
 
+@Composable
+fun ButtonGrid(modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(
+            12.dp,
+            Alignment.CenterVertically
+        )
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            BodyPartButton("Left Lower Arm")
+            BodyPartButton("Right Lower Arm")
+            BodyPartButton("Left Upper Arm")
+        }
 
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            BodyPartButton("Right Upper Arm")
+            BodyPartButton("Left Lower Leg")
+            BodyPartButton("Right Lower Leg")
+        }
 
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            BodyPartButton("Left Upper Leg")
+            BodyPartButton("Right Upper Leg")
+            BodyPartButton("Chest")
+        }
+    }
+}
 
 @Preview(showBackground = true)
 @Composable
