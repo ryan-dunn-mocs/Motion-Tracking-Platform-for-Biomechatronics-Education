@@ -58,26 +58,35 @@ fun ButtonGrid(modifier: Modifier = Modifier) {
         ) {
             Button(
                 onClick = { },
-                modifier = Modifier.size(80.dp),
+                modifier = Modifier.size(width = 240.dp, height = 100.dp),
                 shape = RectangleShape
             ) {
-                Text("1", fontSize = 24.sp)
+                Text(
+                    "Left Lower Arm",
+                    fontSize = 18.sp
+                )
             }
 
             Button(
                 onClick = { },
-                modifier = Modifier.size(80.dp),
+                modifier = Modifier.size(width = 240.dp, height = 100.dp),
                 shape = RectangleShape
             ) {
-                Text("2", fontSize = 24.sp)
+                Text(
+                    "Right Lower Arm",
+                    fontSize = 18.sp
+                )
             }
 
             Button(
                 onClick = { },
-                modifier = Modifier.size(80.dp),
+                modifier = Modifier.size(width = 240.dp, height = 100.dp),
                 shape = RectangleShape
             ) {
-                Text("3", fontSize = 24.sp)
+                Text(
+                    "Left Upper Arm",
+                    fontSize = 18.sp
+                )
             }
         }
 
@@ -86,24 +95,35 @@ fun ButtonGrid(modifier: Modifier = Modifier) {
         ) {
             Button(
                 onClick = { },
-                modifier = Modifier.size(80.dp),
+                modifier = Modifier.size(width = 240.dp, height = 100.dp),
                 shape = RectangleShape
             ) {
-                Text("4", fontSize = 24.sp)
+                Text(
+                    "Right Upper Arm",
+                    fontSize = 18.sp
+                )
             }
+
             Button(
                 onClick = { },
-                modifier = Modifier.size(80.dp),
+                modifier = Modifier.size(width = 240.dp, height = 100.dp),
                 shape = RectangleShape
             ) {
-                Text("5", fontSize = 24.sp)
+                Text(
+                    "Left Lower Leg",
+                    fontSize = 18.sp
+                )
             }
+
             Button(
                 onClick = { },
-                modifier = Modifier.size(80.dp),
+                modifier = Modifier.size(width = 240.dp, height = 100.dp),
                 shape = RectangleShape
             ) {
-                Text("6", fontSize = 24.sp)
+                Text(
+                    "Right Lower Leg",
+                    fontSize = 18.sp
+                )
             }
         }
 
@@ -112,24 +132,35 @@ fun ButtonGrid(modifier: Modifier = Modifier) {
         ) {
             Button(
                 onClick = { },
-                modifier = Modifier.size(80.dp),
+                modifier = Modifier.size(width = 240.dp, height = 100.dp),
                 shape = RectangleShape
             ) {
-                Text("7", fontSize = 24.sp)
+                Text(
+                    "Left Upper Leg",
+                    fontSize = 18.sp
+                )
             }
+
             Button(
                 onClick = { },
-                modifier = Modifier.size(80.dp),
+                modifier = Modifier.size(width = 240.dp, height = 100.dp),
                 shape = RectangleShape
             ) {
-                Text("8", fontSize = 24.sp)
+                Text(
+                    "Right Upper Leg",
+                    fontSize = 18.sp
+                )
             }
+
             Button(
                 onClick = { },
-                modifier = Modifier.size(80.dp),
+                modifier = Modifier.size(width = 240.dp, height = 100.dp),
                 shape = RectangleShape
             ) {
-                Text("9", fontSize = 24.sp)
+                Text(
+                    "Chest",
+                    fontSize = 18.sp
+                )
             }
         }
     }
