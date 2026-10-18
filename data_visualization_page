@@ -1,0 +1,177 @@
+package com.example.myapplication
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.example.myapplication.ui.theme.MyApplicationTheme
+
+// Strongly typed data class separating data from UI formatting
+data class PersonRecord(
+    val id: String,
+    val name: String,
+    val date: String
+)
+
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContent {
+            MyApplicationTheme {
+                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                    DataVisualizationPage(
+                        onBackClick = { finish() },
+                        modifier = Modifier.padding(innerPadding)
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun DataVisualizationPage(
+    onBackClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    // Retains state across configuration changes (e.g. rotation)
+    var showCollectedData by rememberSaveable { mutableStateOf(false) }
+
+    // Intercepts the system back gesture when viewing collected data
+    BackHandler(enabled = showCollectedData) {
+        showCollectedData = false
+    }
+
+    // Sample collected data
+    val people = remember {
+        listOf(
+            PersonRecord("1", "Ryan", "10/04/2026"),
+            PersonRecord("2", "Justin", "10/04/2026"),
+            PersonRecord("3", "Isha", "10/05/2026"),
+            PersonRecord("4", "Nick", "10/05/2026"),
+            PersonRecord("5", "Micah", "10/05/2026"),
+            PersonRecord("6", "Michael", "10/05/2026")
+        )
+    }
+
+    Column(modifier = modifier.fillMaxSize()) {
+
+        // Navigation header
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.End
+        ) {
+            Button(
+                onClick = {
+                    if (showCollectedData) {
+                        showCollectedData = false
+                    } else {
+                        onBackClick()
+                    }
+                }
+            ) {
+                Text(
+                    text = if (showCollectedData) "Back" else "Back to Home"
+                )
+            }
+        }
+
+        if (!showCollectedData) {
+            // DATA VISUALIZATION MAIN SCREEN
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = "Data Visualization",
+                    style = MaterialTheme.typography.headlineLarge
+                )
+
+                Spacer(modifier = Modifier.height(40.dp))
+
+                Button(
+                    onClick = { showCollectedData = true },
+                    modifier = Modifier
+                        .width(250.dp)
+                        .height(60.dp)
+                ) {
+                    Text("Data Collected")
+                }
+            }
+        } else {
+            // DATA COLLECTED SCREEN
+            Text(
+                text = "Data Collected",
+                style = MaterialTheme.typography.headlineLarge,
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(16.dp)
+            )
+
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+            ) {
+                items(people, key = { it.id }) { person ->
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 8.dp)
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(
+                                text = person.name,
+                                style = MaterialTheme.typography.bodyLarge
+                            )
+                            Text(
+                                text = person.date,
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
