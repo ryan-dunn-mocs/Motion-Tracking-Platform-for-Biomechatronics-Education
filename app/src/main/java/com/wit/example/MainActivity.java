@@ -26,6 +26,22 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.Collections;
+
+// for CSV export :>
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
+
+import android.os.Environment;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.util.List;
 
 /**
  * 功能：主界面
@@ -65,7 +81,116 @@ public class MainActivity extends AppCompatActivity implements IBluetoothFoundOb
      */
     private boolean destroyed = true;
 
-    private boolean dataCollectionToggleValue = false;
+    // shared with UI thread for button
+    private volatile boolean dataCollectionToggleValue = false;
+
+    // a list of SensorData objects, one record per sensor per refresh cycle
+    // in memory after collection stop
+    private final List<SensorData> collectedData = Collections.synchronizedList(new ArrayList<>());
+
+    // Example: get the number of records collected.
+    private int getCollectedRecordCount() {
+        return collectedData.size();
+    }
+
+    private List<SensorData> getCollectedDataSnapshot() {
+        synchronized (collectedData) {
+            return new ArrayList<>(collectedData);
+        }
+    }
+
+    private File saveCollectedDataToCsv() {
+        List<SensorData> snapshot = getCollectedDataSnapshot();
+
+        File downloads = Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_DOWNLOADS
+        );
+
+        File directory = new File(downloads, "WIT_MOTION_RECORDINGS");
+
+        if (!directory.exists() && !directory.mkdirs()) {
+            Log.e(TAG, "Could not create directory: "
+                    + directory.getAbsolutePath());
+            return null;
+        }
+
+        String timestamp = new java.text.SimpleDateFormat(
+                "yyyyMMdd_HHmmss",
+                java.util.Locale.US
+        ).format(new java.util.Date());
+
+        File csvFile = new File(
+                directory,
+                "sensor_data_" + timestamp + ".csv"
+        );
+
+        try (BufferedWriter writer = new BufferedWriter(
+                new OutputStreamWriter(
+                        new FileOutputStream(csvFile),
+                        java.nio.charset.StandardCharsets.UTF_8
+                ))) {
+
+            writeCsvContents(writer, snapshot);
+
+            Log.d(TAG, "CSV saved: " + csvFile.getAbsolutePath());
+            Log.d(TAG, "File exists: " + csvFile.exists());
+            Log.d(TAG, "File size: " + csvFile.length() + " bytes");
+
+            return csvFile;
+
+        } catch (IOException e) {
+            Log.e(TAG, "Failed to save CSV", e);
+            return null;
+        }
+    }
+
+    private void writeCsvContents(
+            BufferedWriter writer,
+            List<SensorData> snapshot
+    ) throws IOException {
+
+        writer.write(
+                "timestamp_ms,device_name,accX,accY,accZ,"
+                        + "asX,asY,asZ,angleX,angleY,angleZ,"
+                        + "hX,hY,hZ,temperature,batteryPercentage,version"
+        );
+        writer.newLine();
+
+        for (SensorData data : snapshot) {
+            writer.write(
+                    data.time + ","
+                            + csvEscape(data.deviceName) + ","
+                            + csvEscape(data.accX) + ","
+                            + csvEscape(data.accY) + ","
+                            + csvEscape(data.accZ) + ","
+                            + csvEscape(data.asX) + ","
+                            + csvEscape(data.asY) + ","
+                            + csvEscape(data.asZ) + ","
+                            + csvEscape(data.angleX) + ","
+                            + csvEscape(data.angleY) + ","
+                            + csvEscape(data.angleZ) + ","
+                            + csvEscape(data.hX) + ","
+                            + csvEscape(data.hY) + ","
+                            + csvEscape(data.hZ) + ","
+                            + csvEscape(data.temperature) + ","
+                            + csvEscape(data.batteryPercentage) + ","
+                            + csvEscape(data.version)
+            );
+            writer.newLine();
+        }
+
+        writer.flush();
+    }
+
+    // Escape CSV fields so commas, quotes, or newlines in values
+    // don't corrupt the CSV structure.
+    private String csvEscape(String value) {
+        if (value == null) {
+            return "";
+        }
+
+        return "\"" + value.replace("\"", "\"\"") + "\"";
+    }
 
     private static class SensorData {
         String deviceName;
@@ -202,7 +327,35 @@ public class MainActivity extends AppCompatActivity implements IBluetoothFoundOb
             } else { // when data is being collected
                 dataCollectionToggleButton.setText("BEGIN DATA COLLECTION"); // change text display
                 dataCollectionToggleButton.setBackgroundTintList(android.content.res.ColorStateList.valueOf(android.graphics.Color.GREEN)); // set button color to green
-                Log.d(TAG, "DATA COLLECTION IS TOGGLED OFF");
+                Log.d(TAG, "DATA COLLECTION IS TOGGLED OFF...records collected: " + collectedData.size() );
+
+                // Save all collected records.
+                File csvFile = saveCollectedDataToCsv();
+
+                if (csvFile != null) {
+                    // Clear records only after successful saving.
+                    synchronized (collectedData) {
+                        collectedData.clear();
+                    }
+
+                    Log.d(TAG, "CSV saved successfully: " + csvFile.getAbsolutePath());
+
+                    Toast.makeText(
+                            this,
+                            "Session saved: " + csvFile.getName(),
+                            Toast.LENGTH_LONG
+                    ).show();
+
+                } else {
+                    // Preserve collectedData so saving can be retried.
+                    Log.e(TAG, "CSV save failed. Data retained in memory.");
+
+                    Toast.makeText(
+                            this,
+                            "Save failed. Data retained in memory.",
+                            Toast.LENGTH_LONG
+                    ).show();
+                }
             }
         });
 
@@ -390,7 +543,12 @@ public class MainActivity extends AppCompatActivity implements IBluetoothFoundOb
             }
 
             StringBuilder text = new StringBuilder();
+
+            // all sensors share same timestamp
             long tabletTime = System.currentTimeMillis();
+
+            // Take one snapshot of the toggle state per refresh cycle.
+            boolean collectThisCycle = dataCollectionToggleValue;
 
             for (int i = 0; i < bwt901bleList.size(); i++) {
                 // 让所有设备进行加计校准
@@ -399,32 +557,42 @@ public class MainActivity extends AppCompatActivity implements IBluetoothFoundOb
                 String deviceData = getDeviceData(bwt901ble);
                 text.append(deviceData);
 
-                SensorData logcat_sensor_data = getSensorData(bwt901ble, tabletTime);
-                // print retrived values to logcat
-                Log.d(TAG, "Device: " + logcat_sensor_data.deviceName
-                        + ", Time: " + logcat_sensor_data.time
-                        + ", AccX: " + logcat_sensor_data.accX
-                        + ", AccY: " + logcat_sensor_data.accY
-                        + ", AccZ: " + logcat_sensor_data.accZ
-                        + ", AsX: " + logcat_sensor_data.asX
-                        + ", AsY: " + logcat_sensor_data.asY
-                        + ", AsZ: " + logcat_sensor_data.asZ
-                        + ", AngleX: " + logcat_sensor_data.angleX
-                        + ", AngleY: " + logcat_sensor_data.angleY
-                        + ", AngleZ: " + logcat_sensor_data.angleZ
-                        + ", HX: " + logcat_sensor_data.hX
-                        + ", HY: " + logcat_sensor_data.hY
-                        + ", HZ: " + logcat_sensor_data.hZ
-                        + ", Temperature: " + logcat_sensor_data.temperature
-                        + ", Battery: " + logcat_sensor_data.batteryPercentage
-                        + ", Version: " + logcat_sensor_data.version
+                // Retrieve structured sensor readings.
+                SensorData sensorData =
+                        getSensorData(bwt901ble, tabletTime);
+
+                // Only store records when collection is ON.
+                if (collectThisCycle) {
+                    collectedData.add(sensorData);
+                }
+
+                // Keep diagnostic logging if desired.
+                Log.d(TAG, "Device: "  + sensorData.deviceName
+                        + ", Time: "        + sensorData.time
+                        + ", AccX: "        + sensorData.accX
+                        + ", AccY: "        + sensorData.accY
+                        + ", AccZ: "        + sensorData.accZ
+                        + ", AsX: "         + sensorData.asX
+                        + ", AsY: "         + sensorData.asY
+                        + ", AsZ: "         + sensorData.asZ
+                        + ", AngleX: "      + sensorData.angleX
+                        + ", AngleY: "      + sensorData.angleY
+                        + ", AngleZ: "      + sensorData.angleZ
+                        + ", HX: "          + sensorData.hX
+                        + ", HY: "          + sensorData.hY
+                        + ", HZ: "          + sensorData.hZ
+                        + ", Temperature: " + sensorData.temperature
+                        + ", Battery: "     + sensorData.batteryPercentage
+                        + ", Version: "     + sensorData.version
                 );
             }
 
-            TextView deviceDataTextView = findViewById(R.id.deviceDataTextView);
-            runOnUiThread(() -> {
-                deviceDataTextView.setText(text.toString());
-            });
+            TextView deviceDataTextView =
+                    findViewById(R.id.deviceDataTextView);
+
+            runOnUiThread(() ->
+                    deviceDataTextView.setText(text.toString())
+            );
         }
     }
 
