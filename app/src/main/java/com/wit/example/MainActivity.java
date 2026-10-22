@@ -342,7 +342,7 @@ public class MainActivity extends AppCompatActivity implements IBluetoothFoundOb
 
                     Toast.makeText(
                             this,
-                            "Session saved: " + csvFile.getName(),
+                            "Recording saved to: " + csvFile.getAbsolutePath(),
                             Toast.LENGTH_LONG
                     ).show();
 
