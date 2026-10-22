@@ -101,6 +101,15 @@
                     android:layout_weight="1"
                     android:text="@string/read_reg_03" />
             </LinearLayout>
+
+            <Button
+                android:id="@+id/dataCollectionToggle"
+                android:layout_width="match_parent"
+                android:layout_height="71dp"
+                android:layout_weight="1"
+                android:text="BEGIN DATA COLLECTION"
+                android:backgroundTint="#00FF00"
+                android:textColor="#000000" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -127,6 +136,7 @@
                 android:layout_weight="1"
                 android:text="Data"
                 android:textColor="@color/black" />
+
         </LinearLayout>
     </LinearLayout>
 

@@ -65,6 +65,8 @@ public class MainActivity extends AppCompatActivity implements IBluetoothFoundOb
      */
     private boolean destroyed = true;
 
+    private boolean dataCollectionToggleValue = false;
+
     private static class SensorData {
         String deviceName;
         long time;
@@ -188,6 +190,20 @@ public class MainActivity extends AppCompatActivity implements IBluetoothFoundOb
         Button readReg03Button = findViewById(R.id.readReg03Button);
         readReg03Button.setOnClickListener((v) -> {
             handleReadReg03();
+        });
+
+        Button dataCollectionToggleButton = findViewById(R.id.dataCollectionToggle);
+        dataCollectionToggleButton.setOnClickListener(v -> {
+            dataCollectionToggleValue = !dataCollectionToggleValue;
+            if (dataCollectionToggleValue) { // when data is not being collected
+                dataCollectionToggleButton.setText("STOP DATA COLLECTION"); // change text display
+                dataCollectionToggleButton.setBackgroundTintList(android.content.res.ColorStateList.valueOf(android.graphics.Color.RED)); // set button color to red
+                Log.d(TAG, "DATA COLLECTION IS TOGGLED ON");
+            } else { // when data is being collected
+                dataCollectionToggleButton.setText("BEGIN DATA COLLECTION"); // change text display
+                dataCollectionToggleButton.setBackgroundTintList(android.content.res.ColorStateList.valueOf(android.graphics.Color.GREEN)); // set button color to green
+                Log.d(TAG, "DATA COLLECTION IS TOGGLED OFF");
+            }
         });
 
         // 自动刷新数据线程
