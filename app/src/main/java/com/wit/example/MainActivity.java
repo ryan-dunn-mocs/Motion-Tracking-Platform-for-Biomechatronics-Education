@@ -321,6 +321,10 @@ public class MainActivity extends AppCompatActivity implements IBluetoothFoundOb
                 text.append(deviceData);
             }
 
+            // validating data in logcat
+            Log.d(TAG, "Sensors in list: " + bwt901bleList.size());
+            Log.d(TAG, "Generated display text:\n" + text);
+
             TextView deviceDataTextView = findViewById(R.id.deviceDataTextView);
             runOnUiThread(() -> {
                 deviceDataTextView.setText(text.toString());
