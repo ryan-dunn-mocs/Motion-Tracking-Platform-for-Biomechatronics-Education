@@ -65,6 +65,67 @@ public class MainActivity extends AppCompatActivity implements IBluetoothFoundOb
      */
     private boolean destroyed = true;
 
+    private static class SensorData {
+        String deviceName;
+        long time;
+
+        String accX;
+        String accY;
+        String accZ;
+
+        String asX;
+        String asY;
+        String asZ;
+
+        String angleX;
+        String angleY;
+        String angleZ;
+
+        String hX;
+        String hY;
+        String hZ;
+
+        String temperature;
+        String batteryPercentage;
+        String version;
+    }
+
+
+    private SensorData getSensorData(Bwt901ble bwt901ble, long tablet_time) {
+        SensorData data = new SensorData();
+
+        data.deviceName = bwt901ble.getDeviceName();
+        data.time = tablet_time;
+
+        data.accX = bwt901ble.getDeviceData(WitSensorKey.AccX);
+        data.accY = bwt901ble.getDeviceData(WitSensorKey.AccY);
+        data.accZ = bwt901ble.getDeviceData(WitSensorKey.AccZ);
+
+        data.asX = bwt901ble.getDeviceData(WitSensorKey.AsX);
+        data.asY = bwt901ble.getDeviceData(WitSensorKey.AsY);
+        data.asZ = bwt901ble.getDeviceData(WitSensorKey.AsZ);
+
+        data.angleX = bwt901ble.getDeviceData(WitSensorKey.AngleX);
+        data.angleY = bwt901ble.getDeviceData(WitSensorKey.AngleY);
+        data.angleZ = bwt901ble.getDeviceData(WitSensorKey.AngleZ);
+
+        data.hX = bwt901ble.getDeviceData(WitSensorKey.HX);
+        data.hY = bwt901ble.getDeviceData(WitSensorKey.HY);
+        data.hZ = bwt901ble.getDeviceData(WitSensorKey.HZ);
+
+        data.temperature = bwt901ble.getDeviceData(WitSensorKey.T);
+
+        data.batteryPercentage = bwt901ble.getDeviceData(
+                WitSensorKey.ElectricQuantityPercentage
+        );
+
+        data.version = bwt901ble.getDeviceData(
+                WitSensorKey.VersionNumber
+        );
+
+        return data;
+    }
+
     /**
      * activity 创建时
      * activity when created
@@ -313,17 +374,36 @@ public class MainActivity extends AppCompatActivity implements IBluetoothFoundOb
             }
 
             StringBuilder text = new StringBuilder();
+            long tabletTime = System.currentTimeMillis();
+
             for (int i = 0; i < bwt901bleList.size(); i++) {
                 // 让所有设备进行加计校准
                 // Make all devices accelerometer calibrated
                 Bwt901ble bwt901ble = bwt901bleList.get(i);
                 String deviceData = getDeviceData(bwt901ble);
                 text.append(deviceData);
-            }
 
-            // validating data in logcat
-            Log.d(TAG, "Sensors in list: " + bwt901bleList.size());
-            Log.d(TAG, "Generated display text:\n" + text);
+                SensorData logcat_sensor_data = getSensorData(bwt901ble, tabletTime);
+                // print retrived values to logcat
+                Log.d(TAG, "Device: " + logcat_sensor_data.deviceName
+                        + ", Time: " + logcat_sensor_data.time
+                        + ", AccX: " + logcat_sensor_data.accX
+                        + ", AccY: " + logcat_sensor_data.accY
+                        + ", AccZ: " + logcat_sensor_data.accZ
+                        + ", AsX: " + logcat_sensor_data.asX
+                        + ", AsY: " + logcat_sensor_data.asY
+                        + ", AsZ: " + logcat_sensor_data.asZ
+                        + ", AngleX: " + logcat_sensor_data.angleX
+                        + ", AngleY: " + logcat_sensor_data.angleY
+                        + ", AngleZ: " + logcat_sensor_data.angleZ
+                        + ", HX: " + logcat_sensor_data.hX
+                        + ", HY: " + logcat_sensor_data.hY
+                        + ", HZ: " + logcat_sensor_data.hZ
+                        + ", Temperature: " + logcat_sensor_data.temperature
+                        + ", Battery: " + logcat_sensor_data.batteryPercentage
+                        + ", Version: " + logcat_sensor_data.version
+                );
+            }
 
             TextView deviceDataTextView = findViewById(R.id.deviceDataTextView);
             runOnUiThread(() -> {
