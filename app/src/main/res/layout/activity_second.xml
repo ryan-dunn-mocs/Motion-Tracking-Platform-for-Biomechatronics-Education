@@ -16,4 +16,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Back to Main Page" />
+    <Button
+        android:id="@+id/selectCsvButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select CSV File" />
+    <TextView
+        android:id="@+id/selectedFileText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:text="No file selected"
+        android:textSize="16sp" />
 </LinearLayout>
