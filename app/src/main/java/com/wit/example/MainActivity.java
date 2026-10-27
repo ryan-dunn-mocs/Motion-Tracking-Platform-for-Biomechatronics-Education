@@ -43,6 +43,8 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.List;
 
+import android.content.Intent;
+
 /**
  * 功能：主界面
  * Function: main interface
@@ -357,6 +359,18 @@ public class MainActivity extends AppCompatActivity implements IBluetoothFoundOb
                     ).show();
                 }
             }
+        });
+
+        Button openSecondPageButton =
+                findViewById(R.id.openSecondPageButton);
+
+        openSecondPageButton.setOnClickListener(v -> {
+            Intent intent = new Intent(
+                    MainActivity.this,
+                    SecondActivity.class
+            );
+
+            startActivity(intent);
         });
 
         // 自动刷新数据线程
